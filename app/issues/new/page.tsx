@@ -8,6 +8,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createIssueSchema } from "@/app/validationSchemas.ts";
 import { z } from "zod";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
 // interface IssueForm {
 //   title: string;
@@ -46,12 +47,10 @@ const NewIssuePage = () => {
           {...register("title")}
           type="text"
           placeholder="Title"
-          className=" w-full border px-2 py-1  "
+          className=" w-full border px-2 py-1 focus:outline-none "
         />
-        {errors.title && (
-          <p className=" text-rose-600 ">{errors.title.message}</p>
-        )}
 
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
           name="description"
           control={control}
@@ -59,9 +58,7 @@ const NewIssuePage = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-        {errors.description && (
-          <p className=" text-rose-600">{errors.description.message}</p>
-        )}
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
         <button className=" px-4 py-2  bg-cyan-700 rounded-md text-white ">
           Submit New Issue
