@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 const NewIssuePage = () => {
   return (
@@ -8,10 +10,11 @@ const NewIssuePage = () => {
         placeholder="Title"
         className=" w-full border px-2 py-1  "
       />
-      <textarea
+      {/* <textarea
         placeholder="Description"
         className=" w-full border px-2 py-1 "
-      />
+      /> */}
+      <SimpleMDE placeholder="Description" />
       <button className=" px-4 py-2  bg-cyan-700 rounded-md text-white ">
         Submit New Issue
       </button>
