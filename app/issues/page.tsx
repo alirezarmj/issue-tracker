@@ -1,9 +1,11 @@
-import { Button } from "@radix-ui/themes";
+import Link from "next/link";
 
 const IssuesPage = () => {
   return (
     <div>
-      <Button>new issue</Button>
+      <button className=" px-4 py-2  bg-cyan-700 rounded-md text-white">
+        <Link href="/issues/new">new issue</Link>
+      </button>
     </div>
   );
 };
