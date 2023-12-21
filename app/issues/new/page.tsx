@@ -5,14 +5,25 @@ import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createIssueSchema } from "@/app/validationSchemas.ts";
+import { z } from "zod";
 
-interface IssueForm {
-  title: string;
-  description: string;
-}
+// interface IssueForm {
+//   title: string;
+//   description: string;
+// }
+type IssueForm = z.infer<typeof createIssueSchema>;
 const NewIssuePage = () => {
   const [error, setError] = useState("");
-  const { register, control, handleSubmit } = useForm<IssueForm>();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueForm>({
+    resolver: zodResolver(createIssueSchema),
+  });
   const router = useRouter();
   return (
     <div className=" w-2/3">
@@ -37,10 +48,10 @@ const NewIssuePage = () => {
           placeholder="Title"
           className=" w-full border px-2 py-1  "
         />
-        {/* <textarea
-        placeholder="Description"
-        className=" w-full border px-2 py-1 "
-      /> */}
+        {errors.title && (
+          <p className=" text-rose-600 ">{errors.title.message}</p>
+        )}
+
         <Controller
           name="description"
           control={control}
@@ -48,6 +59,9 @@ const NewIssuePage = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
+        {errors.description && (
+          <p className=" text-rose-600">{errors.description.message}</p>
+        )}
 
         <button className=" px-4 py-2  bg-cyan-700 rounded-md text-white ">
           Submit New Issue
