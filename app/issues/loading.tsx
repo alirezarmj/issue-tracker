@@ -1,19 +1,13 @@
-import Link from "next/link";
-import prisma from "@/prisma/client";
-import IssueStatusBadge from "../components/IssueStatusBadge";
 import delay from "delay";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import IssueActions from "./IssueActions";
 
-const IssuesPage = async () => {
-  const issues = await prisma.issue.findMany();
-  await delay(2000);
+const LoadingIssuesPage = () => {
+  const issues = [1, 2, 3, 4, 5];
+
   return (
-    // <div>
-    //   <button className=" px-4  py-2  bg-cyan-700 rounded-md text-white">
-    //     <Link href="/issues/new">new issue</Link>
-    //   </button>
-    // </div>
-    <div className="container mx-auto">
+    <div>
       <IssueActions />
       <div className="overflow-x-auto rounded-md">
         <table className="min-w-full border ">
@@ -32,19 +26,19 @@ const IssuesPage = async () => {
           </thead>
           <tbody>
             {issues.map((issue) => (
-              <tr key={issue.id} className="border-t border-gray-200">
+              <tr key={issue} className="border-t border-gray-200">
                 <td className="px-6 py-4  whitespace-no-wrap">
-                  {issue.title}
+                  <Skeleton />
                   <div className="block  md:hidden">
-                    <IssueStatusBadge status={issue.status} />
+                    <Skeleton />
                   </div>
                 </td>
 
                 <td className="px-6 py-4 hidden md:table-cell whitespace-no-wrap">
-                  <IssueStatusBadge status={issue.status} />
+                  <Skeleton />
                 </td>
                 <td className="px-6 py-4 hidden md:table-cell whitespace-no-wrap">
-                  {issue.createdAt.toDateString()}
+                  <Skeleton />
                 </td>
               </tr>
             ))}
@@ -55,4 +49,4 @@ const IssuesPage = async () => {
   );
 };
 
-export default IssuesPage;
+export default LoadingIssuesPage;
