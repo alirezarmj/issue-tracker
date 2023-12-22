@@ -63,9 +63,9 @@ const NewIssuePage = () => {
 
         <button
           disabled={isSubmitting}
-          className=" px-4 py-2  bg-cyan-700 flex items-center rounded-md text-white "
+          className=" px-4 py-2  bg-cyan-700 flex items-center space-x-2 rounded-md text-white "
         >
-          Submit New Issue {isSubmitting && <Spinner />}
+          <p> Submit New Issue</p> {isSubmitting && <Spinner />}
         </button>
       </form>
     </div>
