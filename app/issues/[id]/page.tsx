@@ -1,7 +1,7 @@
-import React from "react";
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
+import Markdown from "react-markdown";
 
 interface Props {
   params: { id: string };
@@ -13,6 +13,8 @@ const IssueDetailPage = async ({ params }: Props) => {
     where: { id: parseInt(params.id) },
   });
   if (!issue) notFound();
+  // Ensure issue.description is a string
+
   return (
     <div>
       <h1 className=" text-2xl font-semibold">{issue.title}</h1>
@@ -20,7 +22,10 @@ const IssueDetailPage = async ({ params }: Props) => {
         <IssueStatusBadge status={issue.status} />
         <p>{issue.createdAt.toDateString()}</p>
       </div>
-      <p className=" w-full bg-green-50 p-3 rounded-md">{issue.description}</p>
+
+      <div className="prose w-full bg-green-50 p-3 rounded-md mt-4">
+        <Markdown>{issue.description}</Markdown>
+      </div>
     </div>
   );
 };
