@@ -2,12 +2,14 @@ import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import Markdown from "react-markdown";
+import delay from "delay";
 
 interface Props {
   params: { id: string };
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
+  delay(10000);
   //   if (typeof params.id !== "number") notFound();
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },

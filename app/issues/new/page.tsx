@@ -10,13 +10,14 @@ import { createIssueSchema } from "@/app/validationSchemas.ts";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-
+import delay from "delay";
 // interface IssueForm {
 //   title: string;
 //   description: string;
 // }
 type IssueForm = z.infer<typeof createIssueSchema>;
 const NewIssuePage = () => {
+  delay(4000);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
