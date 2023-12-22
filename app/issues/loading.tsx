@@ -1,6 +1,4 @@
-import delay from "delay";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { Skeleton } from "@/app/components";
 import IssueActions from "./IssueActions";
 
 const LoadingIssuesPage = () => {

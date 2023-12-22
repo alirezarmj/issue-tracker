@@ -1,12 +1,11 @@
-import Link from "next/link";
 import prisma from "@/prisma/client";
-import IssueStatusBadge from "../components/IssueStatusBadge";
-import delay from "delay";
+import Link from "next/link";
+import { IssueStatusBadge } from "@/app/components";
 import IssueActions from "./IssueActions";
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
-  await delay(2000);
+
   return (
     // <div>
     //   <button className=" px-4  py-2  bg-cyan-700 rounded-md text-white">
