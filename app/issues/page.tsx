@@ -34,7 +34,13 @@ const IssuesPage = async () => {
             {issues.map((issue) => (
               <tr key={issue.id} className="border-t border-gray-200">
                 <td className="px-6 py-4  whitespace-no-wrap">
-                  <Link href={`/issues/${issue.id}`}> {issue.title}</Link>
+                  <Link
+                    className=" text-violet-600 hover:underline"
+                    href={`/issues/${issue.id}`}
+                  >
+                    {" "}
+                    {issue.title}
+                  </Link>
                   <div className="block  md:hidden">
                     <IssueStatusBadge status={issue.status} />
                   </div>
