@@ -12,6 +12,7 @@ import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
 import delay from "delay";
+import Button from "@/app/components/Button";
 // interface IssueForm {
 //   title: string;
 //   description: string;
@@ -67,13 +68,9 @@ const NewIssuePage = () => {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-
-        <button
-          disabled={isSubmitting}
-          className=" px-4 py-2  bg-cyan-700 flex items-center space-x-2 rounded-md text-white "
-        >
+        <Button disabled={isSubmitting}>
           <p> Submit New Issue</p> {isSubmitting && <Spinner />}
-        </button>
+        </Button>
       </form>
     </div>
   );
