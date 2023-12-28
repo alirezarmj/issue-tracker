@@ -1,11 +1,14 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import Button from "@/app/components/Button";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null); // Ensure proper typing for modalRef
 
+  const router = useRouter();
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -57,7 +60,16 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
                 <Button onClick={closeModal} color="gray">
                   Cancel
                 </Button>
-                <Button onClick={handleDelete} color="red" className="mr-2">
+                <Button
+                  onClick={async () => {
+                    await axios.delete("/api/issues/" + issueId);
+                    closeModal();
+                    router.push("/issues");
+                    router.refresh();
+                  }}
+                  color="red"
+                  className="mr-2"
+                >
                   Delete Issue
                 </Button>
               </div>
