@@ -1,7 +1,9 @@
 "use client";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { AiFillBug } from "react-icons/ai";
 
 const links = [
@@ -10,8 +12,18 @@ const links = [
 ];
 
 const NavBar = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
   const { status, data: session } = useSession();
+  // console.log(session);
   const currentPath = usePathname();
+
+  const handleMouseEnter = () => {
+    setShowDropdown(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowDropdown(false);
+  };
 
   return (
     <nav className=" flex border-b mb-5 px-5 h-14 items-center justify-between  space-x-6">
@@ -36,8 +48,34 @@ const NavBar = () => {
       </div>
       <div>
         {status === "authenticated" && (
-          <Link href="/api/auth/signout">Logout</Link>
+          <div
+            className=" relative "
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <Image
+              src={session!.user!.image!}
+              alt={session!.user!.name!}
+              width={32} // Adjust width and height as needed
+              height={32}
+              className="w-8 h-8 rounded-full cursor-pointer"
+            />
+            {showDropdown && (
+              <div className="absolute w-fit   transition-all duration-500 ease-in-out right-0 bg-white border rounded-lg shadow-lg  py-2 px-8 opacity-100 z-10">
+                <p className="whitespace-nowrap">{session.user?.email}</p>
+                {status === "authenticated" && (
+                  <Link
+                    className=" cursor-pointer font-bold text-base"
+                    href="/api/auth/signout"
+                  >
+                    Logout
+                  </Link>
+                )}
+              </div>
+            )}
+          </div>
         )}
+
         {status === "unauthenticated" && (
           <Link href="/api/auth/signin">Login</Link>
         )}
