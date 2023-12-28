@@ -27,9 +27,9 @@ const IssueDetailPage = async ({ params }: Props) => {
       <div className=" col-span-4">
         <IssueDetails issue={issue} />
       </div>
-      <div className=" space-y-4  self-center">
-        <EditIssueButton issuseId={issue.id} />
-        <DeleteIssueButton issudeId={issue.id} />
+      <div className=" space-y-4  self-end">
+        <EditIssueButton issueId={issue.id} />
+        <DeleteIssueButton issueId={issue.id} />
       </div>
     </div>
   );

@@ -3,11 +3,11 @@ import Link from "next/link";
 import React from "react";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 
-const EditIssueButton = ({ issuseId }: { issuseId: number }) => {
+const EditIssueButton = ({ issueId }: { issueId: number }) => {
   return (
-    <Button>
+    <Button width="full">
       <HiOutlinePencilSquare />
-      <Link href={`/issues/${issuseId}/edit`}>Edit Issue</Link>
+      <Link href={`/issues/${issueId}/edit`}>Edit Issue</Link>
     </Button>
   );
 };
