@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { AiFillBug } from "react-icons/ai";
+import { Skeleton } from "@/app/components";
 
 const links = [
   { label: "Dashboard", href: "/" },
@@ -15,6 +16,8 @@ const NavBar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { status, data: session } = useSession();
   // console.log(session);
+  // if (status === "loading") return <Skeleton width="3rem" />;
+
   const currentPath = usePathname();
 
   const handleMouseEnter = () => {
@@ -59,6 +62,7 @@ const NavBar = () => {
               width={32} // Adjust width and height as needed
               height={32}
               className="w-8 h-8 rounded-full cursor-pointer"
+              referrerPolicy="no-referrer"
             />
             {showDropdown && (
               <div className="absolute w-fit   transition-all duration-500 ease-in-out right-0 bg-white border rounded-lg shadow-lg  py-2 px-8 opacity-100 z-10">
@@ -75,7 +79,9 @@ const NavBar = () => {
             )}
           </div>
         )}
-
+        {status === "loading" && (
+          <Skeleton width="3rem" height="1.5rem" /> // Adjust width and height as needed
+        )}
         {status === "unauthenticated" && (
           <Link href="/api/auth/signin">Login</Link>
         )}
