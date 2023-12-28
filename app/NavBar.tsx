@@ -14,24 +14,26 @@ const NavBar = () => {
   const currentPath = usePathname();
 
   return (
-    <nav className=" flex border-b mb-5 px-5 h-14 items-center  space-x-6">
-      <Link href="/">
-        <AiFillBug />
-      </Link>
-      <ul className=" flex space-x-6">
-        {links.map((item) => (
-          <li key={item.href}>
-            <Link
-              className={`${
-                item.href === currentPath ? "text-zinc-900" : "text-zinc-500"
-              }  hover:text-zinc-800 transition-colors`}
-              href={item.href}
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <nav className=" flex border-b mb-5 px-5 h-14 items-center justify-between  space-x-6">
+      <div className=" flex items-center space-x-2">
+        <Link href="/">
+          <AiFillBug />
+        </Link>
+        <ul className=" flex space-x-6">
+          {links.map((item) => (
+            <li key={item.href}>
+              <Link
+                className={`${
+                  item.href === currentPath ? "text-zinc-900" : "text-zinc-500"
+                }  hover:text-zinc-800 transition-colors`}
+                href={item.href}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
       <div>
         {status === "authenticated" && (
           <Link href="/api/auth/signout">Logout</Link>
