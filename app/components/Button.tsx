@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`px-4 py-2 flex w-${buttonWidth} justify-center whitespace-nowrap items-center space-x-2 rounded-md text-white ${buttonColor}`}
+      className={`px-4 py-2 flex w-${buttonWidth} disabled:opacity-60 justify-center whitespace-nowrap items-center space-x-2 rounded-md text-white ${buttonColor}`}
       {...props}
     >
       {children}
