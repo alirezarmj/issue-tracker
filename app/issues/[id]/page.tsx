@@ -8,6 +8,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
+import DeleteIssueButton from "./DeleteIssueButton";
 
 interface Props {
   params: { id: string };
@@ -22,12 +23,13 @@ const IssueDetailPage = async ({ params }: Props) => {
   // Ensure issue.description is a string
 
   return (
-    <div className=" grid md:gap-0 gap-y-5 grid-cols-1 md:grid-cols-2 ">
-      <div>
+    <div className=" grid md:gap-1 gap-y-5 grid-cols-1 md:grid-cols-5 ">
+      <div className=" col-span-4">
         <IssueDetails issue={issue} />
       </div>
-      <div>
+      <div className=" space-y-4  self-center">
         <EditIssueButton issuseId={issue.id} />
+        <DeleteIssueButton issudeId={issue.id} />
       </div>
     </div>
   );

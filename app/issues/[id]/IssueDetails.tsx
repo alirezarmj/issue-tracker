@@ -11,7 +11,7 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
         <p>{issue.createdAt.toDateString()}</p>
       </div>
 
-      <div className="prose w-full bg-green-50 p-3 rounded-md mt-4">
+      <div className="prose max-w-full bg-green-50 p-3 rounded-md mt-4">
         <Markdown>{issue.description}</Markdown>
       </div>
     </>
