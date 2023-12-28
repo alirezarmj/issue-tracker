@@ -1,11 +1,15 @@
 import React, { ButtonHTMLAttributes } from "react";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {};
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  color?: string; // Adding color as a prop
+};
 
-const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
+const Button: React.FC<ButtonProps> = ({ children, color, ...props }) => {
+  const buttonColor = color === "red" ? `bg-red-700` : "bg-cyan-700"; // Setting the button color based on the prop or default
+
   return (
     <button
-      className=" px-4 py-2  bg-cyan-700 flex items-center space-x-2 rounded-md text-white "
+      className={`px-4 py-2 flex  w-full justify-center whitespace-nowrap items-center space-x-2 rounded-md text-white ${buttonColor}`}
       {...props}
     >
       {children}
