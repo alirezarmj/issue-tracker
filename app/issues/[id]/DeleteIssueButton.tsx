@@ -3,10 +3,12 @@ import React, { useState, useRef, useEffect } from "react";
 import Button from "@/app/components/Button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Spinner } from "@/app/components";
 
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [error, setError] = useState(false);
+  const [isDeleteing, setIsDeleting] = useState(false);
   const deleteModalRef = useRef<HTMLDivElement>(null);
   const errorModalRef = useRef<HTMLDivElement>(null);
 
@@ -43,18 +45,27 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
   async function handleDelete() {
     closeModal();
     try {
+      setIsDeleting(true);
       await axios.delete("/api/issues/" + issueId);
       router.push("/issues");
       router.refresh();
     } catch (error) {
+      setIsDeleting(false);
       setError(true);
     }
   }
 
   return (
     <>
-      <Button color="red" width="full" onClick={openModal}>
-        Delete Issue
+      <Button
+        color="red"
+        width="full"
+        onClick={openModal}
+        disabled={isDeleteing}
+      >
+        <div className=" flex items-center space-x-2">
+          <p> Delete Issue</p> {isDeleteing && <Spinner />}
+        </div>
       </Button>
       {modalIsOpen && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -99,11 +110,3 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
 };
 
 export default DeleteIssueButton;
-
-// import Button from "@/app/components/Button";
-
-// const DeleteIssueButton = ({ issudeId }: { issudeId: number }) => {
-//   return <Button color="red">Delete Issue</Button>;
-// };
-
-// export default DeleteIssueButton;
