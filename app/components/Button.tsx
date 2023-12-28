@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const buttonColor =
     color === "red"
-      ? `bg-red-700`
+      ? "bg-red-700"
       : color === "gray"
       ? "bg-gray-700"
       : "bg-cyan-700"; // Setting the button color based on the prop or default

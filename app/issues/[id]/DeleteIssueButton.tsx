@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null); // Ensure proper typing for modalRef
+  const [error, setError] = useState(false);
+  const deleteModalRef = useRef<HTMLDivElement>(null);
+  const errorModalRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
   const openModal = () => {
@@ -17,14 +19,11 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
     setModalIsOpen(false);
   };
 
-  const handleDelete = () => {
-    // Perform your delete action here
-    console.log(`Deleting issue ${issueId}`);
-    closeModal(); // Close the modal after deletion
-  };
-
   const handleOutsideClick = (event: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+    if (
+      deleteModalRef.current &&
+      !deleteModalRef.current.contains(event.target as Node)
+    ) {
       closeModal();
     }
   };
@@ -41,6 +40,17 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
     };
   }, [modalIsOpen]);
 
+  async function handleDelete() {
+    closeModal();
+    try {
+      await axios.delete("/api/issues/" + issueId);
+      router.push("/issues");
+      router.refresh();
+    } catch (error) {
+      setError(true);
+    }
+  }
+
   return (
     <>
       <Button color="red" width="full" onClick={openModal}>
@@ -50,27 +60,34 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="bg-white rounded-lg p-8 z-20" ref={modalRef}>
+            <div className="bg-white rounded-lg p-8 z-20" ref={deleteModalRef}>
               <h2 className="text-2xl mb-4">Confirm Deletion</h2>
               <p className="mb-4">
                 Are you sure you want to delete this issue? This action cannot
                 be undone.
               </p>
-              <div className="flex justify-end">
+              <div className="flex justify-end space-x-4">
                 <Button onClick={closeModal} color="gray">
                   Cancel
                 </Button>
-                <Button
-                  onClick={async () => {
-                    await axios.delete("/api/issues/" + issueId);
-                    closeModal();
-                    router.push("/issues");
-                    router.refresh();
-                  }}
-                  color="red"
-                  className="mr-2"
-                >
+                <Button onClick={handleDelete} color="red">
                   Delete Issue
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {error && (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="fixed inset-0 bg-black opacity-50"></div>
+            <div className="bg-white rounded-lg p-8 z-20" ref={errorModalRef}>
+              <h2 className="text-2xl mb-4 font-bold">Error</h2>
+              <p className="mb-4 ">This issue could not be deleted</p>
+              <div className="flex justify-end">
+                <Button onClick={() => setError(false)} color="gray">
+                  Ok
                 </Button>
               </div>
             </div>
