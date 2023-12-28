@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-
+import SimpleMDE from "react-simplemde-editor";
 import Button from "@/app/components/Button";
 import { Issue } from "@prisma/client";
 // interface IssueForm {
@@ -19,9 +19,9 @@ import { Issue } from "@prisma/client";
 //   description: string;
 // }
 
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
+// const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+//   ssr: false,
+// });
 
 type IssueFormData = z.infer<typeof issueSchema>;
 const IssueForm = ({ issue }: { issue?: Issue }) => {
