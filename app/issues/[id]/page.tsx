@@ -33,7 +33,7 @@ const IssueDetailPage = async ({ params }: Props) => {
       </div>
       {session && (
         <div className=" space-y-4  self-end">
-          <AsignSelect />
+          <AsignSelect issue={issue} />
           <EditIssueButton issueId={issue.id} />
           <DeleteIssueButton issueId={issue.id} />
         </div>
