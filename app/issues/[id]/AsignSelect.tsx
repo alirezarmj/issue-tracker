@@ -32,9 +32,9 @@ const AsignSelect = ({ issue }: { issue: Issue }) => {
         assignedTouserId: userId || null,
       });
       if (userId) {
-        toast.success("Changed Assigned for user.");
+        toast.success("Issue Assigned for user.");
       } else {
-        toast.warn("Changed Unassigned.");
+        toast.warn("Issue Unassigned.");
       }
     } catch (error) {
       toast.error("Changes could not be saved.");
