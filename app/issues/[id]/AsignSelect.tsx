@@ -6,7 +6,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 // import Skeleton from "react-loading-skeleton";
 import { Skeleton } from "@/app/components";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AsignSelect = ({ issue }: { issue: Issue }) => {
   const {
     data: users,
@@ -21,14 +22,25 @@ const AsignSelect = ({ issue }: { issue: Issue }) => {
 
   const [selectedUserId, setSelectedUserId] = useState(""); // Track the selected user ID
 
-  const handleAssignChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleAssignChange = async (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const userId = event.target.value;
     setSelectedUserId(userId);
-    axios.patch(`/api/issues/${issue.id}`, {
-      assignedTouserId: userId || null,
-    });
+    try {
+      await axios.patch(`/api/issues/${issue.id}`, {
+        assignedTouserId: userId || null,
+      });
+      if (userId) {
+        toast.success("Changed Assigned for user.");
+      } else {
+        toast.warn("Changed Unassigned.");
+      }
+    } catch (error) {
+      toast.error("Changes could not be saved.");
+    }
   };
-  console.log(selectedUserId);
+
   if (isLoading) return <Skeleton height="2.5rem" />;
   if (error) return null;
 
@@ -58,6 +70,7 @@ const AsignSelect = ({ issue }: { issue: Issue }) => {
         ))}
         {/* Add other options here */}
       </select>
+      <ToastContainer />
     </div>
   );
 };
