@@ -5,38 +5,47 @@ import IssueActions from "./IssueActions";
 import { Issue, Status } from "@prisma/client";
 import { GoArrowUp } from "react-icons/go";
 
+const columns: { label: string; value: keyof Issue; className?: string }[] = [
+  {
+    label: "Issue",
+    value: "title",
+    className:
+      "px-6 py-3  bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider",
+  },
+  {
+    label: "Status",
+    value: "status",
+    className:
+      "px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider",
+  },
+  {
+    label: "Created",
+    value: "createdAt",
+    className:
+      "px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider",
+  },
+];
+
 const IssuesPage = async ({
   searchParams,
 }: {
   searchParams: { status: Status; orderBy: keyof Issue };
 }) => {
-  const columns: { label: string; value: keyof Issue; className?: string }[] = [
-    {
-      label: "Issue",
-      value: "title",
-      className:
-        "px-6 py-3  bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider",
-    },
-    {
-      label: "Status",
-      value: "status",
-      className:
-        "px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider",
-    },
-    {
-      label: "Created",
-      value: "createdAt",
-      className:
-        "px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider",
-    },
-  ];
-
   const statuses = Object.values(Status);
   const status = statuses.includes(searchParams.status)
     ? searchParams.status
     : undefined;
+
+  const orderBy = columns
+    .map((column) => column.value)
+    .includes(searchParams.orderBy)
+    ? {
+        [searchParams.orderBy]: "asc",
+      }
+    : undefined;
   const issues = await prisma.issue.findMany({
     where: { status },
+    orderBy,
   });
 
   return (
