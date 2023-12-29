@@ -20,7 +20,9 @@ const AsignSelect = ({ issue }: { issue: Issue }) => {
     retry: 3,
   });
 
-  const [selectedUserId, setSelectedUserId] = useState(""); // Track the selected user ID
+  const [selectedUserId, setSelectedUserId] = useState(
+    issue.assignedTouserId || ""
+  ); // Track the selected user ID
 
   const handleAssignChange = async (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -56,7 +58,7 @@ const AsignSelect = ({ issue }: { issue: Issue }) => {
     <div>
       {/* <label htmlFor="suggestions">Suggestions</label> */}
       <select
-        defaultValue={issue.assignedTouserId || ""}
+        // defaultValue={issue.assignedTouserId || ""}
         className=" w-full border border-cyan-500 focus:border-cyan-500 focus:outline-0 rounded-md h-10"
         id="suggestions"
         onChange={handleAssignChange} // Attach the onChange handler
