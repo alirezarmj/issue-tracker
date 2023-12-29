@@ -1,5 +1,7 @@
+"use client";
 import { Status } from "@prisma/client";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 const statuses: { label: string; value?: Status }[] = [
   { label: "All" },
@@ -8,12 +10,22 @@ const statuses: { label: string; value?: Status }[] = [
   { label: "Closed", value: "CLOSED" },
 ];
 const IssueStatusFilter = () => {
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const router = useRouter();
+
   return (
     <select
       className=" w-32 border border-cyan-500 focus:border-cyan-500 focus:outline-0 rounded-md h-10"
-
-      // onChange={handleAssignChange} // Attach the onChange handler
-      // value={selectedUserId} // Control the select value using state
+      onChange={(e) => {
+        const status = e.target.value;
+        setSelectedStatus(status);
+        // const query = status ? `?status=${status}` : "";
+        // console.log(status);
+        // router.push("/issues/list" + query);
+        const query = status !== "All" ? `?status=${status}` : "";
+        router.push("/issues/list" + query);
+      }} // Attach the onChange handler
+      value={selectedStatus}
     >
       {/* <option value="">Unassign</option> */}
       {statuses?.map((status) => (
@@ -21,7 +33,6 @@ const IssueStatusFilter = () => {
           {status.label}
         </option>
       ))}
-      {/* Add other options here */}
     </select>
   );
 };
