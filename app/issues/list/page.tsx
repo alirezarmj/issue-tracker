@@ -2,13 +2,35 @@ import prisma from "@/prisma/client";
 import Link from "next/link";
 import { IssueStatusBadge } from "@/app/components";
 import IssueActions from "./IssueActions";
-import { Status } from "@prisma/client";
+import { Issue, Status } from "@prisma/client";
+import { GoArrowUp } from "react-icons/go";
 
 const IssuesPage = async ({
   searchParams,
 }: {
-  searchParams: { status: Status };
+  searchParams: { status: Status; orderBy: keyof Issue };
 }) => {
+  const columns: { label: string; value: keyof Issue; className?: string }[] = [
+    {
+      label: "Issue",
+      value: "title",
+      className:
+        "px-6 py-3  bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider",
+    },
+    {
+      label: "Status",
+      value: "status",
+      className:
+        "px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider",
+    },
+    {
+      label: "Created",
+      value: "createdAt",
+      className:
+        "px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider",
+    },
+  ];
+
   const statuses = Object.values(Status);
   const status = statuses.includes(searchParams.status)
     ? searchParams.status
@@ -29,7 +51,21 @@ const IssuesPage = async ({
         <table className="min-w-full border ">
           <thead>
             <tr>
-              <th className="px-6 py-3  bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider">
+              {columns.map((column) => (
+                <th key={column.value} className={column.className}>
+                  <Link
+                    //  href={`/issues/list?orderBy=${column.value}`}
+                    href={{ query: { ...searchParams, orderBy: column.value } }}
+                  >
+                    {" "}
+                    {column.label}
+                  </Link>
+                  {column.value === searchParams.orderBy && (
+                    <GoArrowUp className="inline" />
+                  )}
+                </th>
+              ))}
+              {/* <th className="px-6 py-3  bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider">
                 Issue
               </th>
               <th className="px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider">
@@ -37,7 +73,7 @@ const IssuesPage = async ({
               </th>
               <th className="px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider">
                 Created
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>
