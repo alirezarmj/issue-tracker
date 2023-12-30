@@ -62,7 +62,7 @@ const IssuesPage = async ({
     // </div>
     <div className="container mx-auto">
       <IssueActions />
-      <div className="overflow-x-auto rounded-md">
+      <div className="overflow-x-auto rounded-md ">
         <table className="min-w-full border ">
           <thead>
             <tr>
@@ -80,15 +80,6 @@ const IssuesPage = async ({
                   )}
                 </th>
               ))}
-              {/* <th className="px-6 py-3  bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider">
-                Issue
-              </th>
-              <th className="px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 hidden md:table-cell   bg-purple-50 text-left  text-base leading-4   font-semibold text-gray-500 uppercase tracking-wider">
-                Created
-              </th> */}
             </tr>
           </thead>
           <tbody>
@@ -117,6 +108,8 @@ const IssuesPage = async ({
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="mt-3">
         <Pagination
           pageSize={pageSize}
           currentPage={page}
