@@ -15,13 +15,13 @@ const Button: React.FC<ButtonProps> = ({
     color === "red"
       ? "bg-red-700"
       : color === "gray"
-      ? "bg-gray-700"
+      ? "bg-gray-500"
       : "bg-cyan-700"; // Setting the button color based on the prop or default
   const buttonWidth = width || "auto"; // Using the provided width or defaulting to 'auto'
 
   return (
     <button
-      className={`px-4 py-2 flex w-${buttonWidth} disabled:opacity-60 justify-center whitespace-nowrap items-center space-x-2 rounded-md text-white ${buttonColor}`}
+      className={`px-4 py-2 flex w-${buttonWidth} disabled:opacity-60 disabled:cursor-not-allowed justify-center whitespace-nowrap items-center space-x-2 rounded-md text-white ${buttonColor}`}
       {...props}
     >
       {children}
