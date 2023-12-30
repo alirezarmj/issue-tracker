@@ -4,6 +4,7 @@ import { IssueStatusBadge } from "@/app/components";
 import IssueActions from "./IssueActions";
 import { Issue, Status } from "@prisma/client";
 import { GoArrowUp } from "react-icons/go";
+import Pagination from "@/app/components/Pagination";
 
 const columns: { label: string; value: keyof Issue; className?: string }[] = [
   {
@@ -29,7 +30,8 @@ const columns: { label: string; value: keyof Issue; className?: string }[] = [
 const IssuesPage = async ({
   searchParams,
 }: {
-  searchParams: { status: Status; orderBy: keyof Issue };
+  searchParams: { status: Status; orderBy: keyof Issue; page: string };
+  page: string;
 }) => {
   const statuses = Object.values(Status);
   const status = statuses.includes(searchParams.status)
@@ -43,11 +45,15 @@ const IssuesPage = async ({
         [searchParams.orderBy]: "asc",
       }
     : undefined;
+  const page = parseInt(searchParams.page) || 1;
+  const pageSize = 10;
   const issues = await prisma.issue.findMany({
     where: { status },
     orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
   });
-
+  const issueCount = await prisma.issue.count({ where: { status } });
   return (
     // <div>
     //   <button className=" px-4  py-2  bg-cyan-700 rounded-md text-white">
@@ -111,6 +117,11 @@ const IssuesPage = async ({
             ))}
           </tbody>
         </table>
+        <Pagination
+          pageSize={pageSize}
+          currentPage={page}
+          itemCount={issueCount}
+        />
       </div>
     </div>
   );
