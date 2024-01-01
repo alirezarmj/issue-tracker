@@ -5,6 +5,7 @@ import IssueActions from "./IssueActions";
 import { Issue, Status } from "@prisma/client";
 import { GoArrowUp } from "react-icons/go";
 import Pagination from "@/app/components/Pagination";
+import { Metadata } from "next";
 
 const columns: { label: string; value: keyof Issue; className?: string }[] = [
   {
@@ -121,3 +122,8 @@ const IssuesPage = async ({
 };
 export const dynamic = "force-dynamic";
 export default IssuesPage;
+
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issue List",
+  description: "View all project issues",
+};
