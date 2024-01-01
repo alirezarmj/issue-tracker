@@ -35,7 +35,7 @@ const LatestIssues = async () => {
                       alt={issue.assignedToUser?.name!}
                       width={32} // Adjust width and height as needed
                       height={32}
-                      className="w-8 h-8 rounded-full cursor-pointer"
+                      className="w-8 h-8 rounded-full "
                       referrerPolicy="no-referrer"
                     />
                   )}
